@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+	<style type="text/css">
+		body{
+			margin: 0;
+		}
+		main{
+			font-size: 0;
+		}
+		.row, .column{
+			box-sizing: border-box;
+		}
+		.row{
+			height: 33vmin;
+		}
+		.column{
+			width: 33vmin;
+			height: 100%;
+			border: 1px solid black;
+			display: inline-block;
+			color: black;
+			font-size: 5rem;
+		}
+		input{
+			width: 50%;
+		}
+	</style>
+	<script type="text/javascript">
+		$(document).ready( initializeApp );
+
+		function initializeApp(){
+			makeBoard(3);
+			$(".column").click( handleColumnClick );
+			$("#size").change( updateBoard);
+		}
+
+		function updateBoard(){
+			$("main").empty();
+			var boardSize = parseInt($("#size").val());
+			makeBoard(boardSize);
+		}
+		var currentSymbol = 'X';
+		function makeBoard(tableSize){
+			var percentSize = 100 / tableSize;
+			var dimension = percentSize + 'vmin';
+			for(var row_index=0; row_index<tableSize; row_index++){
+				var row = $("<div>").addClass('row').css('height',dimension);
+				for(var column_index=0; column_index<tableSize; column_index++){
+					var column = $("<div>", { 
+						'class' : 'column', 
+						html: '&nbsp;',
+						css: {
+							width: dimension
+						}
+					});
+					row.append(column);
+				} //end of make columns
+				$("main").append(row);
+			} //end of make rows
+			
+		}  //end of makeBoard
+		
+
+		function handleColumnClick(){
+			console.log('handleColumnClick called');
+			if($(event.target).html() !== "&nbsp;"){
+				return;
+			}
+			$(event.target).text(currentSymbol);
+			if(currentSymbol === 'X'){
+				currentSymbol = 'O';
+			} else {
+				currentSymbol = 'X'
+			}
+		}
+		
+
+	</script>
+</head>
+<body>
+<input id="size" type="range" min="3" max="10" value="3"></input>
+<main>
+
+	<!-- <div class="row">
+		<div class="column"></div>
+		<div class="column"></div>
+		<div class="column"></div>
+	</div>
+	<div class="row">
+		<div class="column"></div>
+		<div class="column"></div>
+		<div class="column"></div>
+	</div>
+	<div class="row">
+		<div class="column"></div>
+		<div class="column"></div>
+		<div class="column"></div>
+	</div> -->
+</main>
+</body>
+</html>
